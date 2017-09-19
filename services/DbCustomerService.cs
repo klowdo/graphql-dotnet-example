@@ -14,7 +14,8 @@ namespace graphql_dotnet.services
 
         public  Task AddCustomerAsync(Customer newCustomer)
         {
-             return _context.Customers.AddAsync(newCustomer);
+             _context.Customers.AddAsync(newCustomer);
+            return _context.SaveChangesAsync();
         }
 
         public Customer GetCustomerById(Guid id) =>

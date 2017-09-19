@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ApolloClient } from 'apollo-client';
 import { ApolloModule } from 'apollo-angular';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -27,6 +28,7 @@ export function provideClient(): ApolloClient {
         HomeComponent
     ],
     imports: [
+        NgbModule,
         CommonModule,
         HttpModule,
         FormsModule,
