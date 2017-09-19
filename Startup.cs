@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphQL;
+using GraphQL.Conventions;
 using graphql_dotnet.Configuration.data;
+using graphql_dotnet.Configuration.Graphql;
+using graphql_dotnet.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -24,7 +28,20 @@ namespace graphql_dotnet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var executor = GraphQLEngine.New<Configuration.Graphql.BankQuery,CustomerMutations>()
+                        .NewExecutor();
             services.AddDbContext<BigBadBankContext>(options => options.UseSqlite("Data Source=customers.db"));
+            services.AddTransient<IDependencyInjector,GraphQLDependencyInjector>();
+            services.AddTransient<IUserContext,CustomerContext>();
+            services.AddTransient<ICustomerService, DbCustomerService>();
+            services.AddTransient<INoteService, DbNoteServise>();
+            services.AddTransient<IEngagementService, DbEngagementService>();
+            services.AddTransient<IGraphQLExecutor<ExecutionResult>>(provider => 
+                        executor
+                        .EnableProfiling()
+                        .WithUserContext(provider.GetService<IUserContext>())
+                        .WithDependencyInjector(provider.GetService<IDependencyInjector>()));
+                  
 
             services.AddMvc();
 
@@ -47,7 +64,7 @@ namespace graphql_dotnet
             }
 
             app.UseStaticFiles();
-
+            app.UseGraphiQl();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

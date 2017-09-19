@@ -10,5 +10,7 @@ namespace graphql_dotnet.Configuration.data
         }
 
         public DbSet<Customer> Customers { get ; set ; }
+        public DbSet<Engagement> Engagements { get ; set ; }
+        public DbSet<Note> Notes { get ; set ; }
     }
 }
