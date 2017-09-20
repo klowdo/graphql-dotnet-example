@@ -3,12 +3,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { ApolloClient } from 'apollo-client';
+import { ApolloModule } from 'apollo-angular';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+
+const client = new ApolloClient();
+
+export function provideClient(): ApolloClient {
+  return client;
+}
 
 @NgModule({
     declarations: [
@@ -19,6 +28,7 @@ import { CounterComponent } from './components/counter/counter.component';
         HomeComponent
     ],
     imports: [
+        NgbModule,
         CommonModule,
         HttpModule,
         FormsModule,
@@ -28,7 +38,8 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        ApolloModule.forRoot(provideClient)
     ]
 })
 export class AppModuleShared {
