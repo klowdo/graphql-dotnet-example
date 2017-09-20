@@ -9,6 +9,7 @@
     <PackageReference Include="graphiql" Version="1.0.0" />
     <PackageReference Include="GraphQL.Conventions" Version="1.3.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />

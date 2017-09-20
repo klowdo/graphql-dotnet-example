@@ -372,3 +372,5 @@ ClientApp/dist/
 wwwroot/dist/
 
 schema\.graphql
+
+\.DS_Store

@@ -1,11 +1,18 @@
-<h1>Hello, Welocome to this graphql demo!</h1>
+<h1>Hello, Welcome to this graphql demo!</h1>
 <p>Welcome to your new single-page application, built with:</p>
 <ul>
    <li>
-        <a href="/graphql">go to graphiql</a>   
+        <a href="/swagger">go to swagger</a>   
   </li>
+  <li>
+    <a href="/graphql">go to graphiql</a>   
+</li>
 </ul>
 <p>To help you get started, we've also set up:</p>
+<div *ngIf="loading">
+        <span class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size:2.5em;" aria-hidden="true"></span>
+        
+</div>
 <ul>
     <div *ngFor="let customer of customers">
         {{customer.name}} {{customer.birthDate}}

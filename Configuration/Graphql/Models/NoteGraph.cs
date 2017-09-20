@@ -24,7 +24,7 @@ namespace graphql_dotnet.Configuration.Graphql.Models
         public string CreatedBy => _dto.CreatedBy;
         [Description("Note creation date.")]
         public DateTime CreatedAt => _dto.CreatedAt;
-        [Description("Engagement customer")]
+        [Description("Notes customer")]
          public Task<CustomerGraph> Customer([Inject] CustomerContext service) => service.GetCustomer(_dto.CustomerId);
     }
 }

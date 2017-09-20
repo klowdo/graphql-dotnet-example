@@ -30,6 +30,12 @@ namespace graphql_dotnet.Configuration.Graphql
                 Customer = new CustomerGraph(customer),
             };
         }
+
+
+
+
+
+        
         [RelayMutation]
         public async Task<CustomerResult> ChangeName(
             [Inject] ICustomerService service,

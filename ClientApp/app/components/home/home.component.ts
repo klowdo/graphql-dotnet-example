@@ -5,10 +5,18 @@ import gql from 'graphql-tag';
 
 // We use the gql tag to parse our query string into a query document
 const CurrentUserForProfile = gql`
+  fragment engagementFragment on Engagement {
+    name
+    
+  }
   query CurrentUserForProfile {
     customers{
-      name,
+      name
+      notes
       birthDate
+      engagements{
+        ...engagementFragment
+      }
     }
   }
 `;
@@ -30,17 +38,18 @@ const submitCustomer = gql`
 }
 `;
 interface QueryResponse {
-    customers: boolean;
-    loading: any;
+    customers: any;
+    loading: boolean;
 }
 interface MutationResponse {
-  customer: boolean;
-  loading: any;
+  customer: any;
+  loading: boolean;
 }
 
 @Component({
     selector: 'home',
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit  {
     loading: boolean;
@@ -56,6 +65,7 @@ export class HomeComponent implements OnInit  {
           name: this.newCustomerName,
         }
       }).subscribe(({ data }) => {
+        console.log('got data', data);
         if(data != null){
           var customer = data.customer;
           this.customers = [...this.customers, ]
@@ -67,11 +77,16 @@ export class HomeComponent implements OnInit  {
     }
 
     ngOnInit() {
+        this.loading = true;
         this.apollo.watchQuery<QueryResponse>({
-          query: CurrentUserForProfile
+          query: CurrentUserForProfile,
+           pollInterval: 200
         }).subscribe(({data: {loading , customers }}) => {
+          
           this.loading = loading;
           this.customers = customers;
+  
+      
         });
       }
 }
